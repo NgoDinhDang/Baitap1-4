@@ -1,33 +1,83 @@
 # Inventory API - NNPTUD ST4
 
-## Cài đặt
+## Cai dat
 npm install
 
-## Chạy chương trình
+## Chay chuong trinh
 npm start
 
-Server chạy tại:
+Server chay tai:
 http://localhost:3000
 
-## API test bằng Postman
+## User APIs
+### Register
+POST /api/users/register
 
-1. Tạo product
-POST /api/products
+```json
+{
+  "name": "User One",
+  "email": "user1@gmail.com",
+  "password": "123456"
+}
+```
 
-2. Lấy danh sách inventory
-GET /api/inventories
+### Login
+POST /api/users/login
 
-3. Lấy inventory theo ID
-GET /api/inventories/:id
+```json
+{
+  "email": "user1@gmail.com",
+  "password": "123456"
+}
+```
 
-4. Thêm stock
-POST /api/inventories/add-stock
+Login tra ve `_id`. Dung `_id` nay de gan vao header `x-user-id` khi test message.
 
-5. Giảm stock
-POST /api/inventories/remove-stock
+## Message APIs
+De bai chua co auth day du, nen user hien tai duoc lay tu header `x-user-id`.
 
-6. Reservation (giữ hàng)
-POST /api/inventories/reservation
+### 1. Gui tin nhan
+POST /api/messages
 
-7. Sold (bán hàng)
-POST /api/inventories/sold
+Gui text:
+```json
+{
+  "to": "USER_2_ID",
+  "text": "Xin chao"
+}
+```
+
+Gui file:
+```json
+{
+  "to": "USER_2_ID",
+  "filePath": "uploads/files/document.pdf"
+}
+```
+
+### 2. Lay toan bo tin nhan giua user hien tai va user khac
+GET /api/messages/:userID
+
+### 3. Lay tin nhan cuoi cung cua moi user tung nhan/gui
+GET /api/messages
+
+## Postman
+Import file:
+postman/message-api.postman_collection.json
+
+Thu tu test:
+1. Register User 1
+2. Register User 2
+3. Login User 1 va copy `_id`
+4. Login User 2 va copy `_id`
+5. Gan `_id` vao `x-user-id` va `to`
+6. Test 3 router message
+
+## Goi y nop bai Word
+- Anh 1: Register thanh cong
+- Anh 2: Login thanh cong va thay `_id`
+- Anh 3: POST gui text thanh cong
+- Anh 4: POST gui file thanh cong
+- Anh 5: GET /api/messages/:userID
+- Anh 6: GET /api/messages
+- Kem hinh `git status` hoac commit hash neu giang vien yeu cau nop git
